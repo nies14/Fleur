@@ -1,7 +1,16 @@
+using Fleur.Web;
+using Fleur.Web.Services;
+using Fleur.Web.Services.IServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Adding My Service
+builder.Services.AddHttpClient<IProductService, ProductService>();
+SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProductAPI"];
+builder.Services.AddScoped<IProductService,ProductService>();
 
 var app = builder.Build();
 
