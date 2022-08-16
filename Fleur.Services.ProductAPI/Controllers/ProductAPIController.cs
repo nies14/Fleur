@@ -16,6 +16,7 @@ namespace Fleur.Services.ProductAPI.Controllers
             _productRepository = productRepository;
             this._response = new ResponseDto();
         }
+
         [HttpGet]
         public async Task<object> Get()
         {
@@ -53,7 +54,7 @@ namespace Fleur.Services.ProductAPI.Controllers
 
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<object> Post([FromBody] ProductDto productDto)
         {
             try
@@ -72,7 +73,7 @@ namespace Fleur.Services.ProductAPI.Controllers
 
 
         [HttpPut]
-        //[Authorize]
+        [Authorize]
         public async Task<object> Put([FromBody] ProductDto productDto)
         {
             try
@@ -90,7 +91,7 @@ namespace Fleur.Services.ProductAPI.Controllers
         }
 
         [HttpDelete]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [Route("{id}")]
         public async Task<object> Delete(int id)
         {
