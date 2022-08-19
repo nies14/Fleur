@@ -11,7 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fleur.Services.ProductAPI", "Fleur.Services.ProductAPI\Fleur.Services.ProductAPI.csproj", "{C0819D08-004B-4C7C-AF22-CEC4F8C6BD0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fleur.Services.Identity", "Fleur.Services.Identity\Fleur.Services.Identity.csproj", "{BC88B791-E855-4AD8-86D3-939A50D1F78F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fleur.Services.Identity", "Fleur.Services.Identity\Fleur.Services.Identity.csproj", "{BC88B791-E855-4AD8-86D3-939A50D1F78F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fleur.Services.ShoppingCartAPI", "Fleur.Services.ShoppingCartAPI\Fleur.Services.ShoppingCartAPI.csproj", "{17BD69AC-8B5C-4CEC-A454-6B2089CEAE89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fleur.Services.CouponAPI", "Fleur.Services.CouponAPI\Fleur.Services.CouponAPI.csproj", "{52D10060-941D-46E4-BA8E-3888430A9101}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,14 @@ Global
 		{BC88B791-E855-4AD8-86D3-939A50D1F78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC88B791-E855-4AD8-86D3-939A50D1F78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC88B791-E855-4AD8-86D3-939A50D1F78F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17BD69AC-8B5C-4CEC-A454-6B2089CEAE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17BD69AC-8B5C-4CEC-A454-6B2089CEAE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17BD69AC-8B5C-4CEC-A454-6B2089CEAE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17BD69AC-8B5C-4CEC-A454-6B2089CEAE89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52D10060-941D-46E4-BA8E-3888430A9101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D10060-941D-46E4-BA8E-3888430A9101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D10060-941D-46E4-BA8E-3888430A9101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D10060-941D-46E4-BA8E-3888430A9101}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +51,8 @@ Global
 		{850D1032-BA3A-4144-B5BE-DC1C2BBB779A} = {A85D7E19-83DF-44D1-AB2C-5E4A1745024D}
 		{C0819D08-004B-4C7C-AF22-CEC4F8C6BD0A} = {5A952204-E1F6-4CB5-A558-EBFC8E81AA81}
 		{BC88B791-E855-4AD8-86D3-939A50D1F78F} = {5A952204-E1F6-4CB5-A558-EBFC8E81AA81}
+		{17BD69AC-8B5C-4CEC-A454-6B2089CEAE89} = {5A952204-E1F6-4CB5-A558-EBFC8E81AA81}
+		{52D10060-941D-46E4-BA8E-3888430A9101} = {5A952204-E1F6-4CB5-A558-EBFC8E81AA81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {408F2324-BDC1-46BA-8F1F-660AD84763E3}

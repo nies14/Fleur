@@ -1,19 +1,17 @@
- using AutoMapper;
-using Fleur.Services.ProductAPI;
-using Fleur.Services.ProductAPI.DbContexts;
-using Fleur.Services.ProductAPI.Repository;
+using AutoMapper;
+using Fleur.Services.ShoppingCartAPI;
+using Fleur.Services.ShoppingCartAPI.DbContexts;
+using Fleur.Services.ShoppingCartAPI.Repository;
+using Fleur.Services.ShoppingCartAPI.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-
 //Add Authentication
 builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options => {
     options.Authority = "https://localhost:7054/";
@@ -41,8 +39,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -50,7 +47,7 @@ builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fleur.Services.ProductAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fleur.Services.ShoppingCartAPI", Version = "v1" });
     c.EnableAnnotations();
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
