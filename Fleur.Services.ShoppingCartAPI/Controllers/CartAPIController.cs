@@ -1,5 +1,6 @@
 ﻿using Fleur.Services.ShoppingCartAPI.Messages;
 using Fleur.Services.ShoppingCartAPI.Models.Dto;
+using Fleur.Services.ShoppingCartAPI.RabbitMQSender;
 using Fleur.Services.ShoppingCartAPI.Repository;
 using Fleur.Services.ShoppingCartAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -11,14 +12,16 @@ namespace Fleur.Services.ShoppingCartAPI.Controllers
     public class CartAPIController : Controller
     {
         protected ResponseDto _response;
-        private ICartRepository _cartRepository;
-        private ICouponRepository _couponRepository;
+        private readonly ICartRepository _cartRepository;
+        private readonly ICouponRepository _couponRepository;
+        private readonly IRabbitMQCartMessageSender _rabbitMQCartMessageSender;
 
-        public CartAPIController(ICartRepository cartRepository, ICouponRepository couponRepository)
+        public CartAPIController(ICartRepository cartRepository, ICouponRepository couponRepository, IRabbitMQCartMessageSender rabbitMQCartMessageSender)
         {
             _cartRepository = cartRepository;
             this._response = new ResponseDto();
-            _couponRepository = couponRepository;
+            this._couponRepository = couponRepository;
+            this._rabbitMQCartMessageSender = rabbitMQCartMessageSender;
         }
 
         [HttpGet("GetCart/{userId}")]
@@ -146,7 +149,7 @@ namespace Fleur.Services.ShoppingCartAPI.Controllers
                 //await _messageBus.PublishMessage(checkoutHeader, "checkoutqueue");
 
                 ////rabbitMQ
-                //_rabbitMQCartMessageSender.SendMessage(checkoutHeader, "checkoutqueue");
+                _rabbitMQCartMessageSender.SendMessage(checkoutHeader, "checkoutqueue");
                 await _cartRepository.ClearCart(checkoutHeader.UserId);
             }
             catch (Exception ex)

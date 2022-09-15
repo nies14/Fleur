@@ -1,9 +1,6 @@
-﻿using Fleur.Services.ShoppingCartAPI.Models.Dto;
-using Fleur.Services.ShoppingCartAPI.RabbitMQSender;
-
-namespace Fleur.Services.ShoppingCartAPI.Messages
+﻿namespace Fleur.Services.OrderAPI.Messages
 {
-    public class CheckoutHeaderDto : BaseMessage
+    public class CheckoutHeaderDto
     {
         public int CartHeaderId { get; set; }
         public string UserId { get; set; }
@@ -18,7 +15,7 @@ namespace Fleur.Services.ShoppingCartAPI.Messages
         public string CardNumber { get; set; }
         public string CVV { get; set; }
         public string ExpiryMonthYear { get; set; }
-        public int CartTotal { get; set; }
+        public int CartTotalItems { get; set; }
         public IEnumerable<CartDetailsDto> CartDetails { get; set; }
     }
 }

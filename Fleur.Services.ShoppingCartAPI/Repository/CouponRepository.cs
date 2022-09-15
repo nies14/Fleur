@@ -1,13 +1,28 @@
 ﻿using Fleur.Services.ShoppingCartAPI.Models.Dto;
 using Fleur.Services.ShoppingCartAPI.Repository.IRepository;
+using Newtonsoft.Json;
 
 namespace Fleur.Services.ShoppingCartAPI.Repository
 {
     public class CouponRepository : ICouponRepository
     {
-        public Task<CouponDto> GetCoupon(string couponName)
+        private readonly HttpClient client;
+
+        public CouponRepository(HttpClient client)
         {
-            throw new NotImplementedException();
+            this.client = client;
+        }
+
+        public async Task<CouponDto> GetCoupon(string couponName)
+        {
+            var response = await client.GetAsync($"/api/coupon/{couponName}");
+            var apiContent = await response.Content.ReadAsStringAsync();
+            var resp = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
+            if (resp.IsSuccess)
+            {
+                return JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(resp.Result));
+            }
+            return new CouponDto();
         }
     }
 }

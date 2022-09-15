@@ -1,16 +1,15 @@
 using AutoMapper;
-using Fleur.Services.ShoppingCartAPI;
-using Fleur.Services.ShoppingCartAPI.DbContexts;
-using Fleur.Services.ShoppingCartAPI.RabbitMQSender;
-using Fleur.Services.ShoppingCartAPI.Repository;
-using Fleur.Services.ShoppingCartAPI.Repository.IRepository;
+using Fleur.Services.OrderAPI.DbContexts;
+using Fleur.Services.OrderAPI.Messaging;
+using Fleur.Services.OrderAPI.RabbitMQSender;
+using Fleur.Services.OrderAPI.Repository;
+using Fleur.Services.OrderAPI.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 //Add Authentication
 builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options => {
@@ -34,16 +33,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-
-//Maping Config
-IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
-builder.Services.AddSingleton(mapper);
+// Add services to the container.
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.AddScoped<ICouponRepository, CouponRepository>();
-builder.Services.AddSingleton<IRabbitMQCartMessageSender, RabbitMQCartMessageSender>();
-builder.Services.AddHttpClient<ICouponRepository, CouponRepository>(u => u.BaseAddress =
-              new Uri(builder.Configuration["ServiceUrls:CouponAPI"]));
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+builder.Services.AddHostedService<RabbitMQPaymentConsumer>();
+builder.Services.AddHostedService<RabbitMQCheckoutConsumer>();
+builder.Services.AddSingleton(new OrderRepository(optionBuilder.Options));
+builder.Services.AddSingleton<IRabbitMQOrderMessageSender, RabbitMQOrderMessageSender>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -51,7 +51,7 @@ builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fleur.Services.ShoppingCartAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fleur.Services.OrderAPI", Version = "v1" });
     c.EnableAnnotations();
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -81,7 +81,6 @@ builder.Services.AddSwaggerGen(c =>
                 });
 });
 
-
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -94,6 +93,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
