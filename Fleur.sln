@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fleur.Services.Email", "Fle
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{A1B03230-2B0C-4CF9-BB0E-2C391F6E5F52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fleur.Gateway", "Fleur.Gateway\Fleur.Gateway.csproj", "{3FDBB9A5-2339-4679-93EE-1A47C337714B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fleur.Gateway", "Fleur.Gateway\Fleur.Gateway.csproj", "{3FDBB9A5-2339-4679-93EE-1A47C337714B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,16 @@
+version: '3'
+services:
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - SA_PASSWORD=Tanvir14
+      - ACCEPT_EULA=Y
+    ports:
+      - "1401:1433"
+  productapi :
+    build: .
+    environment:
+      DefaultConnection: "Server=127.0.0.1,1401;Initial Catalog=Fleur;User ID=SA;Password=Tanvir14;MultipleActiveResultSets=true"
+    ports:
+      - "8080:80"
+  
