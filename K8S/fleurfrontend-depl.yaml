@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleurfrontend-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fleurfrontend
+  template:
+    metadata:
+      labels:
+        app: fleurfrontend
+    spec:
+      containers:
+        - name: fleurfrontend
+          image: nies14/fleurfrontend:latest
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleurfrontend-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: fleurfrontend
+  ports:
+  - name: fleurfrontend
+    protocol: TCP
+    port: 80
+    targetPort: 80

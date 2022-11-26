@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderapiservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orderapiservice
+  template:
+    metadata:
+      labels:
+        app: orderapiservice
+    spec:
+      containers:
+        - name: orderapiservice
+          image: nies14/fleurorderapiservice:latest
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: orderapiservice
+  ports:
+  - name: orderapiservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

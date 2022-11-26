@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    - host: fleur.com
+      http:
+        paths:
+          - path: /api/products
+            pathType: Prefix
+            backend:
+              service:
+                name: productapi-clusterip-srv
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fleurfrontend-clusterip-srv
+                port:
+                  number: 80
+    - host: fleuridentity.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: identityapi-clusterip-srv
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - fleur.com
+        - fleuridentity.com
+      secretName: selfsigned-cert-tls

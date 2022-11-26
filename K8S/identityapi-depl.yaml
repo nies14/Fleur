@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identityapiservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identityapiservice
+  template:
+    metadata:
+      labels:
+        app: identityapiservice
+    spec:
+      containers:
+        - name: identityapiservice
+          image: nies14/identityapiservice:latest
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identityapi-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: identityapiservice
+  ports:
+  - name: identityapiservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

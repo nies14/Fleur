@@ -21,6 +21,7 @@ builder.Services.AddAuthentication(options => {
     options.TokenValidationParameters.RoleClaimType = "role";
     options.Scope.Add("fleur");
     options.SaveTokens = true;
+    options.RequireHttpsMetadata = false;
 });
 
 //Adding My Service

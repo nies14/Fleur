@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gatewayservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gatewayservice
+  template:
+    metadata:
+      labels:
+        app: gatewayservice
+    spec:
+      containers:
+        - name: gatewayservice
+          image: nies14/fleurgateway:latest
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: gatewayservice
+  ports:
+  - name: gatewayservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

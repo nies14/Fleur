@@ -39,8 +39,10 @@ namespace Fleur.Services.Identity
                     ClientId="fleur",
                     ClientSecrets= { new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris={ "https://localhost:7196/signin-oidc" },
-                    PostLogoutRedirectUris={"https://localhost:7196/signout-callback-oidc" },
+                    //RedirectUris={ "https://localhost:7196/signin-oidc" },
+                    //PostLogoutRedirectUris={"https://localhost:7196/signout-callback-oidc" },
+                    RedirectUris = { "https://fleur.com/signin-oidc" },
+                    PostLogoutRedirectUris={"https://fleur.com/signout-callback-oidc" },
                     AllowedScopes=new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

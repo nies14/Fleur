@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productapiservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productapiservice
+  template:
+    metadata:
+      labels:
+        app: productapiservice
+    spec:
+      containers:
+        - name: productapiservice
+          image: nies14/fleurproductapiservice:latest
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: productapi-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: productapiservice
+  ports:
+  - name: productapiservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
